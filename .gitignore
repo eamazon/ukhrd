@@ -6,3 +6,5 @@ __pycache__/
 *.tmp
 ukhrd.db
 ukhrd.db-journal
+build/
+dist/

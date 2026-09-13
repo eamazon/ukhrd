@@ -145,25 +145,30 @@ should be recorded against everything a refresh writes. The tests need `pytest`
 
 ## For AI assistants (MCP)
 
-`python3 cli.py mcp` serves UKHRD to any assistant that speaks MCP (the Model Context Protocol), over
-stdio. It is **read-only**: it opens `ukhrd.db` read-only and never fetches.
+UKHRD is also an MCP server (the Model Context Protocol), so an AI assistant can look codes up for you.
+It runs on your own computer and is **read-only**.
 
-```bash
-python3 -m venv .venv && .venv/bin/pip install -r requirements-mcp.txt
-```
-
-Then add it to your MCP client's configuration, with the full path to your clone:
+**Nothing to clone.** With [uv](https://docs.astral.sh/uv/) installed, add this to your MCP client's
+configuration:
 
 ```json
 {
   "mcpServers": {
     "ukhrd": {
-      "command": "/full/path/to/ukhrd/.venv/bin/python",
-      "args": ["/full/path/to/ukhrd/cli.py", "mcp"]
+      "command": "uvx",
+      "args": ["--from", "ukhrd[mcp] @ git+https://github.com/eamazon/ukhrd", "ukhrd-mcp"]
     }
   }
 }
 ```
+
+It installs the server from this repo, downloads `ukhrd.db` from the latest release, keeps it in
+`~/.cache/ukhrd`, and fetches a newer one once that copy is a day old. If GitHub cannot be reached it keeps
+answering from the copy it has.
+
+**From a clone instead:** `pip install -r requirements-mcp.txt`, then use
+`"command": "/full/path/to/ukhrd/.venv/bin/python", "args": ["/full/path/to/ukhrd/cli.py", "mcp"]`.
+That reads the clone's own `ukhrd.db`.
 
 | tool | answers |
 |---|---|

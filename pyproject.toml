@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ukhrd"
+version = "0.2.0"
+description = "UK Health Reference Data — what the codes in NHS data mean, every version kept"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+dependencies = []
+
+[project.optional-dependencies]
+mcp = ["mcp>=2.2,<3"]
+
+[project.scripts]
+ukhrd-mcp = "ukhrd.mcp_server:main"
+
+[project.urls]
+Homepage = "https://github.com/eamazon/ukhrd"
+
+[tool.setuptools.packages.find]
+where = ["src"]

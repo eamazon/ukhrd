@@ -34,3 +34,35 @@ def test_the_server_offers_only_read_only_tools_and_tells_the_assistant_to_credi
     assert {t.name for t in tools} == TOOL_NAMES
     assert all(t.annotations.read_only_hint is True and t.annotations.destructive_hint is False for t in tools)
     assert "Contains nothing from Nobody." in server.instructions
+
+
+def test_a_copy_from_github_is_fetched_once_a_day_and_a_bad_download_keeps_the_one_held(tmp_path):
+    import os
+    import time
+
+    cache, calls = tmp_path / "cache" / "ukhrd.db", []
+
+    def fetch(body):
+        def answer(url):
+            calls.append(url)
+            if isinstance(body, Exception):
+                raise body
+            return body
+        return answer
+
+    with pytest.raises(OSError):
+        mcp_server.latest_copy(cache, fetch=fetch(OSError("offline")))   # nothing held, nothing to fall back on
+
+    mcp_server.latest_copy(cache, fetch=fetch(mcp_server.SQLITE + b"first"))
+    mcp_server.latest_copy(cache, fetch=fetch(mcp_server.SQLITE + b"second"))
+    assert cache.read_bytes().endswith(b"first") and len(calls) == 2, "a copy under a day old is not fetched again"
+
+    two_days_ago = time.time() - 2 * 24 * 3600
+    for bad in (b"<html>Not Found</html>", OSError("offline")):
+        os.utime(cache, (two_days_ago, two_days_ago))
+        mcp_server.latest_copy(cache, fetch=fetch(bad))
+        assert cache.read_bytes().endswith(b"first"), "a failed or garbled download keeps the copy held"
+
+    mcp_server.latest_copy(cache, fetch=fetch(mcp_server.SQLITE + b"newer"))
+    assert cache.read_bytes().endswith(b"newer"), "a day-old copy is replaced"
+    assert not list(cache.parent.glob("*.tmp"))

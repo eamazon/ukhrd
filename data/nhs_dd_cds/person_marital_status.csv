@@ -1,0 +1,13 @@
+person_marital_status_key,code_kind,code,description,valid_from,valid_to,is_current,first_fetch_run_id,loaded_at,loaded_by,updated_at,updated_by
+3,national,1,Single (Retired 1 October 2006),1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+4,national,2,Married/separated (Retired 1 October 2006),1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+5,national,3,Divorced (Retired 1 October 2006),1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+6,national,4,Widowed (Retired 1 October 2006),1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+7,national,D,Divorced/Person whose Civil Partnership has been dissolved,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+8,national,M,Married/Civil Partner,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+9,national,N,Not disclosed,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+10,national,P,Separated,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+11,national,S,Single,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+12,national,W,Widowed/Surviving Civil Partner,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+1,default,8,Not applicable,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+2,default,9,Not known,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,

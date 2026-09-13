@@ -1,0 +1,12 @@
+critical_care_discharge_status_key,code_kind,code,description,valid_from,valid_to,is_current,first_fetch_run_id,loaded_at,loaded_by,updated_at,updated_by
+1,national,01,Fully ready for discharge,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+2,national,02,Discharge for Palliative Care,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+3,national,03,Early discharge due to shortage of critical care beds,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+4,national,04,Delayed discharge due to shortage of other WARD beds,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+5,national,05,Current level of care continuing in another LOCATION,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+6,national,06,More specialised care in another LOCATION,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+7,national,07,Self discharge against medical advice,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+8,national,08,PATIENT died (no organs donated),1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+9,national,09,PATIENT died (heart beating solid organ donor),1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+10,national,10,PATIENT died (cadaveric TISSUE donor),1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+11,national,11,PATIENT died (non heart beating solid organ donor),1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,

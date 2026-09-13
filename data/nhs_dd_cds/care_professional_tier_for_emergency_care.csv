@@ -1,0 +1,6 @@
+care_professional_tier_for_emergency_care_key,code_kind,code,description,valid_from,valid_to,is_current,first_fetch_run_id,loaded_at,loaded_by,updated_at,updated_by
+1,national,01,Require complete supervision. All PATIENTS must be signed off by a senior CARE PROFESSIONAL before admission or discharge,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+2,national,02,"Require access to advice or direct supervision, or practice independently but with limited scope",1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+3,national,03,"More senior/experienced CARE PROFESSIONALS, requiring less direct supervision. Fewer limitations in scope of practice",1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+4,national,04,Senior CARE PROFESSIONALS able to supervise an Emergency Care Department alone with remote support. Possess some extended skills. Full scope of practice,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+5,national,05,Senior CARE PROFESSIONALS ( CONSULTANTS) with accredited advanced qualifications in Emergency Medicine. Full set of extended skills. Full scope of practice,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,

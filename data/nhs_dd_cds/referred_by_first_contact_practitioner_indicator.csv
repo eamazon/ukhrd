@@ -1,0 +1,4 @@
+referred_by_first_contact_practitioner_indicator_key,code_kind,code,description,valid_from,valid_to,is_current,first_fetch_run_id,loaded_at,loaded_by,updated_at,updated_by
+2,national,N,No - PATIENT not referred by a First Contact Practitioner,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+3,national,Y,Yes - PATIENT referred by a First Contact Practitioner,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+1,default,9,Not Known whether PATIENT referred by a First Contact Practitioner,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,

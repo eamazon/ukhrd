@@ -1,0 +1,2 @@
+diagnosis_scheme_in_use_commissioning_data_set_key,code_kind,code,description,valid_from,valid_to,is_current,first_fetch_run_id,loaded_at,loaded_by,updated_at,updated_by
+1,national,02,ICD-10,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,

@@ -1,0 +1,7 @@
+critical_care_discharge_destination_key,code_kind,code,description,valid_from,valid_to,is_current,first_fetch_run_id,loaded_at,loaded_by,updated_at,updated_by
+1,national,01,Same NHS Hospital Site,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+2,national,02,Other NHS Hospital Site (can be same Trust or a different NHS Trust),1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+3,national,03,Independent Hospital Provider in the UK,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+4,national,04,Non-hospital destination within the UK (e.g. home as coded in LOCATION),1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+5,national,05,Non United Kingdom destination (e.g. repatriation),1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+6,national,06,"No CRITICAL CARE DISCHARGE DESTINATION, PATIENT died in unit",1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,

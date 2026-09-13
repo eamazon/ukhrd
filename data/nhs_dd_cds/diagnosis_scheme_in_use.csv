@@ -1,0 +1,7 @@
+diagnosis_scheme_in_use_key,code_kind,code,description,valid_from,valid_to,is_current,first_fetch_run_id,loaded_at,loaded_by,updated_at,updated_by
+1,national,01,Accident & Emergency Diagnosis (Retired 01 November 2020),1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+2,national,02,ICD-10,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+3,national,03,Read Code 4Byte Version (retired 1 October 2009) (Retired 2009-09-30T01:00:00+01:00),1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+4,national,04,Read Coded Clinical Terms Version 2,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+5,national,05,Read Coded Clinical Terms Version 3 (CTV3),1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+6,national,06,SNOMED CT®,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,

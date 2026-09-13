@@ -1,0 +1,8 @@
+cds_message_version_number_key,code_kind,code,description,valid_from,valid_to,is_current,first_fetch_run_id,loaded_at,loaded_by,updated_at,updated_by
+1,national,CDS006,The 2007 CDS-XML Specification (CDS V6-0/6-1/6-1-1): Note the change to the prefix CDS,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+2,national,CDS062,The 2012 CDS XML Specification (V6-2/6-2-1/6-2-2/6-2-3/6-2-0): Note the change to the format which represents the sub-version identifier (version 6-2),1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+3,national,CDS063,The 2022 CDS XML Specification (V6-3),1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+4,national,ECDS04,The 2023 ECDS XML Specification (ECDS V4),1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+5,national,NHS003,The 2000 / 2001 Specification,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+6,national,NHS004,The 2004 / 2005 CDS XML Specification,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+7,national,NHS005,The 2005 / 2006 CDS XML Specification: For implementation of XML messaging in the Secondary Uses Service,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,

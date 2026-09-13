@@ -1,0 +1,6 @@
+emergency_care_department_type_key,code_kind,code,description,valid_from,valid_to,is_current,first_fetch_run_id,loaded_at,loaded_by,updated_at,updated_by
+1,national,01,Emergency Care Attendance at an Emergency Care Department Type 'Major Emergency Care Department',1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+2,national,02,Emergency Care Attendance at an Emergency Care Department Type 'Mono-specialty Emergency Care Department',1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+3,national,03,Emergency Care Attendance at an Emergency Care Department Type ' Urgent Treatment Centre',1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+4,national,04,NHS walk in centres. Note this item will be retired 01 July 2023,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+5,national,05,Same Day Emergency Care. No longer in use for pilot data collection of Same Day Emergency Care Activity.,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,

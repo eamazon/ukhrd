@@ -1,0 +1,5 @@
+present_on_admission_indicator_key,code_kind,code,description,valid_from,valid_to,is_current,first_fetch_run_id,loaded_at,loaded_by,updated_at,updated_by
+3,national,N,No - PATIENT DIAGNOSIS not already present,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+4,national,Y,Yes - PATIENT DIAGNOSIS already present,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+1,default,8,Not applicable (indication of this PATIENT DIAGNOSIS on admission not required nationally),1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+2,default,9,Not known whether the PATIENT DIAGNOSIS was present on admission,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,

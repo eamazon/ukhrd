@@ -1,0 +1,8 @@
+attended_or_did_not_attend_key,code_kind,code,description,valid_from,valid_to,is_current,first_fetch_run_id,loaded_at,loaded_by,updated_at,updated_by
+1,national,0,Not applicable - APPOINTMENT occurs in the future,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+2,national,2,"APPOINTMENT cancelled by, or on behalf of, the PATIENT",1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+3,national,3,Did not attend - no advance warning given,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+4,national,4,APPOINTMENT cancelled or postponed by the Health Care Provider,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+5,national,5,"Attended on time or, if late, before the relevant CARE PROFESSIONAL was ready to see the PATIENT",1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+6,national,6,"Arrived late, after the relevant CARE PROFESSIONAL was ready to see the PATIENT, but was seen",1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+7,national,7,PATIENT arrived late and could not be seen,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,

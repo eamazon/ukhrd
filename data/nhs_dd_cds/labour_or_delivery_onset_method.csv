@@ -1,0 +1,7 @@
+labour_or_delivery_onset_method_key,code_kind,code,description,valid_from,valid_to,is_current,first_fetch_run_id,loaded_at,loaded_by,updated_at,updated_by
+2,national,1,Spontaneous; the onset of regular contractions whether or not preceded by spontaneous rupture of the membranes,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+3,national,2,"Any Caesarean Section carried out before the onset of Labour or a planned elective Caesarean Section carried out immediately following the onset of Labour, when the decision was made before Labour",1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+4,national,3,Surgical induction; by amniotomy,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+5,national,4,"Medical induction; including administration of agents either orally, intravenously or intravaginally with the intention of initiating Labour",1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+6,national,5,Combination of surgical induction and medical induction,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+1,default,9,LABOUR OR DELIVERY ONSET METHOD not known,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,

@@ -1,0 +1,10 @@
+overseas_visitor_charging_category_at_cds_activity_date_key,code_kind,code,description,valid_from,valid_to,is_current,first_fetch_run_id,loaded_at,loaded_by,updated_at,updated_by
+3,national,A,Standard NHS-funded PATIENT,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+4,national,B,Immigration Health Surcharge payee,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+5,national,C,Charge-exempt Overseas Visitor ( European Economic Area),1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+6,national,D,Chargeable European Economic Area PATIENT,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+7,national,E,Charge-exempt Overseas Visitor (non- European Economic Area),1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+8,national,F,Chargeable non- European Economic Area PATIENT,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+9,national,P,Decision Pending on OVERSEAS VISITOR CHARGING CATEGORY,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+1,default,9,OVERSEAS VISITOR CHARGING CATEGORY Not Known (Not Recorded),1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+2,default,X,Not Known (Decision pending on OVERSEAS VISITOR CHARGING CATEGORY): only valid for CDS V6-2-1 Type 011 - Emergency Care Commissioning Data Set (Retired March 2022),1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,

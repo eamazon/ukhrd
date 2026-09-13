@@ -1,0 +1,11 @@
+actual_delivery_place_key,code_kind,code,description,valid_from,valid_to,is_current,first_fetch_run_id,loaded_at,loaded_by,updated_at,updated_by
+1,national,0,In NHS hospital - Delivery facilities associated with MIDWIFE WARD,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+2,national,1,At a domestic ADDRESS,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+3,national,2,In NHS hospital - Delivery facilities associated with CONSULTANT WARD,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+4,national,3,In NHS hospital - Delivery facilities associated with GENERAL MEDICAL PRACTITIONER WARD,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+5,national,4,In NHS hospital - Delivery facilities associated with CONSULTANT/ GENERAL MEDICAL PRACTITIONER/ MIDWIFE WARD inclusive of any combination of two of the professionals mentioned,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+6,national,5,In private hospital,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+7,national,6,In other hospital or institution,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+8,national,7,In NHS hospital - WARD or unit without Delivery facilities,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+9,national,8,None of the above,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+10,national,9,Not known,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,

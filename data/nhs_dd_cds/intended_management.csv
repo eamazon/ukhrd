@@ -1,0 +1,8 @@
+intended_management_key,code_kind,code,description,valid_from,valid_to,is_current,first_fetch_run_id,loaded_at,loaded_by,updated_at,updated_by
+3,national,1,PATIENT to stay in hospital for at least one night,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+4,national,2,PATIENT not to stay in hospital overnight,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+5,national,3,PATIENT to be admitted for a planned sequence of admissions each involving at least one overnight stay,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+6,national,4,PATIENT to be admitted for a planned sequence of admissions which do not involve an overnight stay,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+7,national,5,PATIENT to be admitted regularly for a planned sequence of nights who returns home for the remainder of the 24 hour period,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+1,default,8,Not applicable,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+2,default,9,INTENDED MANAGEMENT not known,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,

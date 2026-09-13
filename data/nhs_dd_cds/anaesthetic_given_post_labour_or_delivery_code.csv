@@ -1,0 +1,10 @@
+anaesthetic_given_post_labour_or_delivery_code_key,code_kind,code,description,valid_from,valid_to,is_current,first_fetch_run_id,loaded_at,loaded_by,updated_at,updated_by
+2,national,1,"General anaesthetic, the administration by a doctor of an agent intended to produce unconsciousness",1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+3,national,2,"Epidural or caudal anaesthetic, the injection of a local anaesthetic agent into the epidural space",1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+4,national,3,"Spinal anaesthetic, the injection of a local anaesthetic agent into the subarachnoid space",1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+5,national,4,General anaesthetic and epidural or caudal anaesthetic,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+6,national,5,General anaesthetic and spinal anaesthetic,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+7,national,6,Epidural or caudal and spinal anaesthetic,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+8,national,7,"Anaesthetic other than in 1 to 6, or analgesic only",1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+9,national,8,No analgesic or anaesthetic administered,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+1,default,9,Anaesthetic type not known,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,

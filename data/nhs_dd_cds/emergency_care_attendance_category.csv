@@ -1,0 +1,6 @@
+emergency_care_attendance_category_key,code_kind,code,description,valid_from,valid_to,is_current,first_fetch_run_id,loaded_at,loaded_by,updated_at,updated_by
+2,national,1,Unplanned First Emergency Care Attendance for a new clinical condition (or deterioration of a chronic condition).,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+3,national,2,Unplanned Follow-up Emergency Care Attendance for the same or a related clinical condition and within 7 days of the First Emergency Care Attendance at THIS Emergency Care Department,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+4,national,3,Unplanned Follow-up Emergency Care Attendance for the same or a related clinical condition and within 7 days of the First Emergency Care Attendance at ANOTHER Emergency Care Department,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+5,national,4,Planned Follow-up Emergency Care Attendance within 7 days of the First Emergency Care Attendance at THIS Emergency Care Department,1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,
+1,default,X,Not Applicable ( PATIENT dead on arrival in Emergency Care Department),1900-01-01T00:00:00.000000+00:00,,true,3,2026-09-12T21:50:58.303823+00:00,databot,,

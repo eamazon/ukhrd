@@ -8,3 +8,4 @@ ukhrd.db
 ukhrd.db-journal
 build/
 dist/
+release/

@@ -148,6 +148,10 @@ should be recorded against everything a refresh writes. The tests need `pytest`
 UKHRD is also an MCP server (the Model Context Protocol), so an AI assistant can look codes up for you.
 It runs on your own computer and is **read-only**.
 
+**One click.** Download
+[`ukhrd.mcpb`](https://github.com/eamazon/ukhrd/releases/latest/download/ukhrd.mcpb) and open it with a
+desktop AI app that supports MCP Bundles. The app sets up everything the server needs.
+
 **Nothing to clone.** With [uv](https://docs.astral.sh/uv/) installed, add this to your MCP client's
 configuration:
 

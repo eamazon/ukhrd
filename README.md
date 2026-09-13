@@ -40,8 +40,8 @@ Every code, description and list name here is copied from the
   ICD-10 or OPCS-4 as options. None of those schemes' own codes are held here.
 - **Not endorsed.** UKHRD is an independent project. It is not produced, approved or endorsed by NHS
   England.
-- **The dictionary is the authority.** Our copy is only as fresh as its last refresh — see
-  `data/fetches.csv`. For anything that matters, check the page itself.
+- **The dictionary is the authority.** Our copy is checked against it every day, and every check is
+  recorded in `data/fetches.csv`. For anything that matters, check the page itself.
 
 ## The files are the store
 
@@ -57,6 +57,11 @@ data/nhs_dd_cds/admission_method.csv  every version of every code in one list   
 
 When the NHS changes something, `git diff data/` shows exactly what. A refresh that finds nothing new
 changes one line in `fetches.csv` and nothing else.
+
+**It keeps itself fresh.** A GitHub Action reads the dictionary every morning. A quiet day adds one line
+to `fetches.csv`. When NHS England changes something, it opens a pull request showing exactly what
+changed; once a person has looked and merged it, a new release with a fresh `ukhrd.db` is published.
+A check that looks wrong — too few codes, a list gone missing — changes nothing and is logged as refused.
 
 The database is **one SQLite file, `ukhrd.db`**, built from those files in under a second. Throw it
 away whenever you like. Each [release](https://github.com/eamazon/ukhrd/releases) also carries a
@@ -128,8 +133,8 @@ python3 cli.py changes admission_method # every version, with its dates
 sqlite3 ukhrd.db "SELECT * FROM ref_admission_method"
 ```
 
-To bring it up to date with the NHS, `python3 cli.py refresh` (about 9 seconds), then `git diff data/`
-to see what changed.
+To bring your clone up to date, `git pull` — the daily check has usually already done the work. To run
+a check yourself, `python3 cli.py refresh` (about 9 seconds), then `git diff data/` to see what changed.
 
 Set `UKHRD_DB` to keep the database somewhere other than `ukhrd.db`. Set `UKHRD_ACTOR` to the name that
 should be recorded against everything a refresh writes. The tests need `pytest`

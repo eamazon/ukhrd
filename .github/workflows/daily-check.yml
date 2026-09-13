@@ -1,0 +1,95 @@
+name: daily-check
+# Every day, read the NHS Data Dictionary and fold it into data/.
+#   nothing changed    the one new line in data/fetches.csv is committed straight to main
+#   something changed  a pull request shows exactly what; a person merges it, then "publish" releases it
+#   refused or failed  the log line is committed, and this run fails so GitHub emails the maintainer
+# While an update is waiting to be merged, each day's check lands on that pull request instead, so no
+# day's log line is lost. NHS England's terms say a cached copy "should" be refreshed every 24 hours.
+
+on:
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: ukhrd-data
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      UKHRD_ACTOR: github-actions (daily check)
+      GH_TOKEN: ${{ github.token }}
+      BASE: ${{ github.ref_name }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Carry on from an update still waiting to be merged
+        run: |
+          if [ "$(gh pr view nhs-update --json state,baseRefName --jq '.state + " " + .baseRefName' 2>/dev/null)" = "OPEN $BASE" ]; then
+            git fetch -q origin nhs-update
+            git switch -q -c nhs-update FETCH_HEAD
+            echo "WAITING=yes" >> "$GITHUB_ENV"
+          fi
+
+      - name: Read the NHS Data Dictionary
+        id: refresh
+        run: |
+          set +e
+          python cli.py refresh
+          echo "code=$?" >> "$GITHUB_OUTPUT"
+          python -c "import csv; r = list(csv.DictReader(open('data/fetches.csv')))[-1]; print(r['outcome'] + ': ' + r['detail'])" > last.txt
+
+      - name: Record it
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [ "$WAITING" != "yes" ] && [ -z "$(git status --porcelain -- data ':!data/fetches.csv')" ]; then
+            git add data/fetches.csv
+            git commit -q -m "Daily check — $(cat last.txt)"
+            git push -q origin "HEAD:$BASE"
+            exit 0
+          fi
+          if [ "$WAITING" = "yes" ]; then
+            git add data && git commit -q -m "Daily check — $(cat last.txt)"
+            git push -q origin nhs-update
+          else
+            git switch -q -c nhs-update
+            git add data && git commit -q -m "NHS Data Dictionary changed — $(cat last.txt)"
+            git push -q --force origin nhs-update
+          fi
+          git fetch -q origin "$BASE"
+          python -c "import csv; rows = [r for r in csv.DictReader(open('data/fetches.csv')) if r['is_changed'] == 'true']; print(rows[-1]['detail'])" > change.txt
+          {
+            echo "The daily check found that the NHS Data Dictionary has changed."
+            echo
+            echo "> $(cat change.txt)"
+            echo
+            echo "Last checked — $(cat last.txt)"
+            echo
+            echo '```'
+            git diff --stat FETCH_HEAD HEAD -- data
+            echo '```'
+            echo
+            echo "**Look at the files changed, then merge to publish a new release.** Nothing is published until"
+            echo "this is merged. If a meaning looks wrong, check its page (named in \`data/lists.csv\`) first."
+          } > body.md
+          if [ "$WAITING" = "yes" ]; then
+            gh pr edit nhs-update --body-file body.md
+          else
+            gh pr create --base "$BASE" --head nhs-update --title "NHS Data Dictionary changed" --body-file body.md
+          fi
+
+      - name: Fail loudly if the check was refused or failed
+        if: steps.refresh.outputs.code != '0'
+        run: |
+          cat last.txt
+          exit 1

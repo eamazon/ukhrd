@@ -65,7 +65,8 @@ A check that looks wrong — too few codes, a list gone missing — changes noth
 
 The database is **one SQLite file, `ukhrd.db`**, built from those files in under a second. Throw it
 away whenever you like. Each [release](https://github.com/eamazon/ukhrd/releases) also carries a
-ready-built copy.
+ready-built copy, plus **`codes.parquet`** and **`lists.parquet`** for DuckDB, Snowflake, Fabric, Postgres
+and Power BI — how to use them is at the end of `docs/QUERIES.md`.
 
 ## Three doors, on purpose
 

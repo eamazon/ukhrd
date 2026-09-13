@@ -30,11 +30,13 @@ jobs:
 
       - name: Test
         run: |
-          pip install -q -r requirements.txt
+          pip install -q -r requirements.txt -r requirements-export.txt
           python -m pytest -q
 
-      - name: Build the database from the files
-        run: python cli.py load
+      - name: Build the database and the Parquet files from the files
+        run: |
+          python cli.py load
+          python scripts/export_parquet.py release
 
       - name: Release it
         run: |
@@ -47,11 +49,16 @@ jobs:
           open("notes.md", "w").write(
               f"Built from `data/` at this commit. Latest check: {last['detail']}.\n\n"
               "- **`ukhrd.db`** — the SQLite database. Open it with any tool that reads SQLite; start with "
-              "`ref_list_directory`. How to query it: `docs/QUERIES.md`.\n"
+              "`ref_list_directory`.\n"
+              "- **`codes.parquet`** — every version of every code, all lists in one table. **`lists.parquet`** — "
+              "every version of every list, with its NHS page. For DuckDB, Snowflake, Fabric, Power BI.\n"
+              "- These links always point at the newest release: "
+              "`https://github.com/eamazon/ukhrd/releases/latest/download/codes.parquet` (and `lists.parquet`, "
+              "`ukhrd.db`). How to use them: `docs/QUERIES.md`.\n"
               "- What changed is in the commit history of `data/`.\n\n"
               "**Where the data comes from.** Contains information from NHS England, licensed under the current "
               "version of the [Open Government Licence](https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/). "
               "Codes and descriptions are copied exactly as published. UKHRD is independent and not endorsed by "
               "NHS England; the [NHS Data Model and Dictionary](https://www.datadictionary.nhs.uk/) is the authority.\n")
           PY
-          gh release create "$(cat tag.txt)" ukhrd.db --target "$GITHUB_SHA" --title "$(cat title.txt)" --notes-file notes.md
+          gh release create "$(cat tag.txt)" ukhrd.db release/codes.parquet release/lists.parquet --target "$GITHUB_SHA" --title "$(cat title.txt)" --notes-file notes.md

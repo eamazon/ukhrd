@@ -216,3 +216,88 @@ The same history is in git. What the publisher changed between two commits:
 git diff --stat HEAD~1 -- data/
 git log -p -- data/nhs_dd_cds/admission_method.csv
 ```
+
+## Without cloning — DuckDB, Postgres, Snowflake, Fabric, Power BI
+
+Every release carries three files, and these links always point at the newest release:
+
+```
+https://github.com/eamazon/ukhrd/releases/latest/download/ukhrd.db        the SQLite database
+https://github.com/eamazon/ukhrd/releases/latest/download/codes.parquet   every version of every code, all lists in one table
+https://github.com/eamazon/ukhrd/releases/latest/download/lists.parquet   every version of every list: its page, its data sets
+```
+
+`codes.parquet` is every `dim_` table stacked, with `list_name` and `concept` added and the per-list key
+renamed `code_key` (unique within a list, not across lists). Today's codes are `WHERE is_current`.
+Timestamps are real UTC timestamps. To join it to `lists.parquet`, use `source_key` and `list_name` — but
+one list can have several rows there (printed on several pages), so pick the rows you want first.
+**NHS England's credit is inside each file's metadata; keep it with the data.**
+
+⚠ Only DuckDB and Power Query read a link directly. **Snowflake and Fabric cannot read from GitHub**:
+download the file first, or have a notebook fetch it, as below. Each recipe says whether we have run it.
+
+**DuckDB** — run by us
+
+```sql
+SELECT code, description
+  FROM 'https://github.com/eamazon/ukhrd/releases/latest/download/codes.parquet'
+ WHERE list_name = 'admission_method' AND is_current;
+
+-- or the whole database, every table and view, read over the web:
+ATTACH 'https://github.com/eamazon/ukhrd/releases/latest/download/ukhrd.db' AS ukhrd (TYPE sqlite, READ_ONLY);
+SELECT * FROM ukhrd.ref_admission_method;
+```
+
+**Postgres, through DuckDB** — run by us
+
+Postgres cannot read Parquet itself. DuckDB can copy it in:
+
+```sql
+-- in duckdb
+ATTACH 'dbname=mydb host=localhost user=me' AS pg (TYPE postgres);
+DROP TABLE IF EXISTS pg.public.ukhrd_codes;
+CREATE TABLE pg.public.ukhrd_codes AS
+  SELECT * FROM 'https://github.com/eamazon/ukhrd/releases/latest/download/codes.parquet';
+```
+
+**Snowflake** — written from Snowflake's documentation, not yet run by us
+
+Download `codes.parquet`, then:
+
+```sql
+CREATE OR REPLACE STAGE ukhrd;
+-- upload codes.parquet into the stage: in Snowsight, or with SnowSQL:
+--   PUT file:///path/to/codes.parquet @ukhrd AUTO_COMPRESS = FALSE;
+CREATE OR REPLACE TABLE ukhrd_codes (
+  source_key STRING, list_name STRING, concept STRING, code_key NUMBER, code_kind STRING, code STRING,
+  description STRING, valid_from TIMESTAMP_TZ, valid_to TIMESTAMP_TZ, is_current BOOLEAN,
+  first_fetch_run_id NUMBER, loaded_at TIMESTAMP_TZ, loaded_by STRING, updated_at TIMESTAMP_TZ, updated_by STRING);
+COPY INTO ukhrd_codes FROM @ukhrd FILES = ('codes.parquet')
+  FILE_FORMAT = (TYPE = PARQUET USE_LOGICAL_TYPE = TRUE)
+  MATCH_BY_COLUMN_NAME = CASE_INSENSITIVE;
+```
+
+**Microsoft Fabric** — written from Fabric's documentation, not yet run by us
+
+By hand: in a Lakehouse, upload `codes.parquet` under **Files**, then choose **Load to Tables › New table**.
+
+Or in a notebook attached to the Lakehouse, scheduled to run every day:
+
+```python
+import urllib.request
+url = "https://github.com/eamazon/ukhrd/releases/latest/download/codes.parquet"
+urllib.request.urlretrieve(url, "/lakehouse/default/Files/ukhrd_codes.parquet")
+spark.read.parquet("Files/ukhrd_codes.parquet").write.mode("overwrite").saveAsTable("ukhrd_codes")
+```
+
+**Power BI or Excel (Power Query)** — not yet run by us
+
+**Get data › Blank query**, then in the Advanced Editor:
+
+```
+let
+    Source = Parquet.Document(Binary.Buffer(Web.Contents(
+        "https://github.com/eamazon/ukhrd/releases/latest/download/codes.parquet")))
+in
+    Source
+```

@@ -1,7 +1,8 @@
 # The data
 
-These files are the store behind UKHRD (UK Health Reference Data): every version of every code, every
-list and every fetch.
+These files are the store behind UKHRD (UK Health Reference Data): the National Codes and Default Codes
+of the data elements used by the NHS Commissioning Data Sets (CDS v6-2 and v6-3), as effective-dated
+lookup tables — every version of every code, every list and every fetch.
 
 **Source:** the [NHS Data Model and Dictionary](https://www.datadictionary.nhs.uk/), published by NHS
 England.

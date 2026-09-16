@@ -8,6 +8,7 @@ on:
     paths:
       - "data/**"
       - "!data/fetches.csv"
+      - "!data/README.md"
   workflow_dispatch:
 
 permissions:

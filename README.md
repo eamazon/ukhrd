@@ -142,7 +142,9 @@ Each release carries ready-built copies. These links always point at the newest:
 ## Three ways in
 
 1. **SQL.** One real table per list. No ORM, no service to run. Open `ukhrd.db` with anything that reads
-   SQLite, or load the Parquet files into DuckDB, Snowflake, Fabric or Postgres — see `docs/QUERIES.md`.
+   SQLite, or load the Parquet files into your own warehouse — ready-to-run loaders for **Microsoft Fabric
+   and Snowflake** are in [`integrations/`](integrations/), and DuckDB, Postgres and Power BI recipes are
+   in [`docs/QUERIES.md`](docs/QUERIES.md). Each loader builds one table per reference list.
 2. **Command line.** `refresh`, `load`, `status`, `lists`, `show`, `lookup`, `history`, `changes`.
 3. **MCP server**, read-only, for AI assistants. See [below](#for-ai-assistants-mcp).
 

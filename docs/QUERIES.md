@@ -236,6 +236,10 @@ one list can have several rows there (printed on several pages), so pick the row
 ⚠ Only DuckDB and Power Query read a link directly. **Snowflake and Fabric cannot read from GitHub**:
 download the file first, or have a notebook fetch it, as below. Each recipe says whether we have run it.
 
+**Ready-to-run loaders live in [`../integrations/`](../integrations/)** — a Fabric notebook and a
+Snowflake script, both building one table per reference list (`ukhrd_admission_method`, and 120 more).
+The recipes below are the short version.
+
 **DuckDB** — run by us
 
 ```sql

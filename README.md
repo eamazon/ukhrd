@@ -137,6 +137,7 @@ Each release carries ready-built copies. These links always point at the newest:
 | [`ukhrd.db`](https://github.com/eamazon/ukhrd/releases/latest/download/ukhrd.db) | the SQLite database: every table and view above |
 | [`codes.parquet`](https://github.com/eamazon/ukhrd/releases/latest/download/codes.parquet) | every version of every code, all lists in one typed table |
 | [`lists.parquet`](https://github.com/eamazon/ukhrd/releases/latest/download/lists.parquet) | every version of every list's details, with its NHS page |
+| [`codes.csv`](https://github.com/eamazon/ukhrd/releases/latest/download/codes.csv) · [`lists.csv`](https://github.com/eamazon/ukhrd/releases/latest/download/lists.csv) | the same two tables as plain CSV, for tools that cannot read Parquet |
 | [`ukhrd.mcpb`](https://github.com/eamazon/ukhrd/releases/latest/download/ukhrd.mcpb) | the MCP server as a one-click bundle |
 
 ## Loading it into a warehouse
@@ -145,11 +146,12 @@ Ready-to-run loaders live in **[`integrations/`](integrations/)**. Each builds *
 list** — `ukhrd_admission_method`, `ukhrd_treatment_function_code`, and 119 more — so a join names a table
 rather than filtering on a list name.
 
-| platform | step-by-step | from the release's Parquet | from the repository's CSV |
-|---|---|---|---|
-| Microsoft Fabric | [guide](integrations/fabric/README.md) | [notebook](integrations/fabric/load_ukhrd.ipynb) | [notebook](integrations/fabric/load_ukhrd_from_csv.ipynb) |
-| Snowflake | [guide](integrations/snowflake/README.md) | [SQL script](integrations/snowflake/load_ukhrd.sql) | [SQL script](integrations/snowflake/load_ukhrd_from_csv.sql) |
-| DuckDB · Postgres · Power BI | [recipes](docs/QUERIES.md#without-cloning--duckdb-postgres-snowflake-fabric-power-bi) | — | — |
+| platform | step-by-step | loaders |
+|---|---|---|
+| Microsoft Fabric | [guide](integrations/fabric/README.md) | [notebook, release Parquet](integrations/fabric/load_ukhrd.ipynb) · [notebook, repository CSV](integrations/fabric/load_ukhrd_from_csv.ipynb) |
+| Snowflake | [guide](integrations/snowflake/README.md) | [SQL, release Parquet](integrations/snowflake/load_ukhrd.sql) · [SQL, repository CSV](integrations/snowflake/load_ukhrd_from_csv.sql) |
+| SQL Server | [guide](integrations/sqlserver/README.md) | [SQL, release CSV](integrations/sqlserver/load_ukhrd.sql) — plain `BULK INSERT`, 2017 or newer |
+| DuckDB · Postgres · Power BI | [recipes](docs/QUERIES.md#without-cloning--duckdb-postgres-snowflake-fabric-power-bi) | read the files straight from the release links |
 
 The Fabric guide also covers landing the files with a pipeline instead, click by click, if bronze and
 silver are kept apart.

@@ -3,15 +3,18 @@
 Ready-to-run loaders. Each one builds **one table per reference list** — `ukhrd_admission_method`,
 `ukhrd_treatment_function_code`, and 119 more — so a join names a table, never a filter on a list name.
 
-| step-by-step guide | from the release's Parquet | from the repository's CSV |
+| platform | step-by-step guide | loaders |
 |---|---|---|
-| **[Microsoft Fabric](fabric/README.md)** | [`fabric/load_ukhrd.ipynb`](fabric/load_ukhrd.ipynb) | [`fabric/load_ukhrd_from_csv.ipynb`](fabric/load_ukhrd_from_csv.ipynb) |
-| **[Snowflake](snowflake/README.md)** | [`snowflake/load_ukhrd.sql`](snowflake/load_ukhrd.sql) | [`snowflake/load_ukhrd_from_csv.sql`](snowflake/load_ukhrd_from_csv.sql) |
+| Microsoft Fabric | **[guide](fabric/README.md)** | [`load_ukhrd.ipynb`](fabric/load_ukhrd.ipynb) — release Parquet · [`load_ukhrd_from_csv.ipynb`](fabric/load_ukhrd_from_csv.ipynb) — repository CSV |
+| Snowflake | **[guide](snowflake/README.md)** | [`load_ukhrd.sql`](snowflake/load_ukhrd.sql) — release Parquet · [`load_ukhrd_from_csv.sql`](snowflake/load_ukhrd_from_csv.sql) — repository CSV |
+| SQL Server | **[guide](sqlserver/README.md)** | [`load_ukhrd.sql`](sqlserver/load_ukhrd.sql) — release CSV, plain `BULK INSERT` |
 
-Both routes end with the same tables. **Parquet** is two small typed files from the latest release —
-quickest, and what most people want. **CSV** is the publisher's own files, exactly as git tracks them, and
-does not wait for a release to be cut. The Fabric guide also covers landing the files with a pipeline
-(no code) and keeping bronze and silver apart.
+Every route ends with the same tables. **Parquet** is two small typed files from the latest release —
+quickest, and what most people want. **CSV** comes in two flavours: the release's `codes.csv` and
+`lists.csv` (flat, ready to bulk load), or the publisher's own files exactly as git tracks them, which do
+not wait for a release to be cut. SQL Server uses the release CSV, because it cannot fetch a URL and
+reading Parquet there needs external storage. The Fabric guide also covers landing the files with a
+pipeline (no code) and keeping bronze and silver apart.
 
 Both read the same two files, and these links always point at the newest release:
 

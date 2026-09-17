@@ -1,6 +1,7 @@
 """What the Parquet files promise: every version, real types, and the credit inside the file."""
 from __future__ import annotations
 
+import csv
 import importlib.util
 import pathlib
 
@@ -34,3 +35,18 @@ def test_the_parquet_holds_every_version_with_real_types_and_the_credit_inside(t
     for path in (codes, lists):
         meta = dict(con.sql(f"SELECT decode(key), decode(value) FROM parquet_kv_metadata('{path}')").fetchall())
         assert meta["attribution"] == "Contains nothing from Nobody.", f"{path.name} lost the credit"
+
+
+def test_the_release_also_carries_plain_csv_for_tools_that_cannot_read_parquet(tmp_path):
+    """SQL Server, Excel and R cannot read Parquet. The CSV must be the same tables, same columns."""
+    store.refresh(SOURCE, read=lambda _url: three_lists())
+
+    export_parquet.export(tmp_path / "out")
+
+    rows = list(csv.DictReader((tmp_path / "out" / "codes.csv").open(newline="", encoding="utf-8")))
+    assert tuple(rows[0]) == export_parquet.CODES, "codes.csv must match the Parquet, column for column"
+    assert len(rows) == 60 and {r["is_current"] for r in rows} == {"true"}, "booleans as in data/"
+    assert [r["description"] for r in rows if r["list_name"] == "concept_0" and r["code"] == "0"] == ["meaning 0"]
+
+    lists = list(csv.DictReader((tmp_path / "out" / "lists.csv").open(newline="", encoding="utf-8")))
+    assert tuple(lists[0]) == export_parquet.LISTS and len(lists) == 3

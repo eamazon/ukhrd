@@ -1,9 +1,11 @@
-"""Write the Parquet files that go on every release, from ukhrd.db.
+"""Write the data files that go on every release, from ukhrd.db.
 
     python cli.py load && python scripts/export_parquet.py [folder]       (default: the current folder)
 
     codes.parquet   every version of every code in every list — the dim_ tables stacked, one row each
     lists.parquet   every version of every list's details: its name here, its NHS page, its data sets
+    codes.csv       the same two tables as plain CSV, for tools that cannot read Parquet — SQL Server,
+    lists.csv       Excel, R. Same columns, same order; booleans 'true' / 'false', dates ISO 8601 text
 
 Join them on source_key + list_name. One list_name can have several rows in lists.parquet — the same list
 printed on several pages — so pick the rows you want before joining, or codes multiply.
@@ -17,6 +19,7 @@ Parquet, install it.
 """
 from __future__ import annotations
 
+import csv
 import pathlib
 import sys
 
@@ -50,8 +53,21 @@ def _write(con, name: str, columns: tuple[str, ...], rows: list[tuple], path: pa
                 f"(FORMAT parquet, COMPRESSION zstd, KV_METADATA {{{kv}}})")
 
 
+def _csv(path: pathlib.Path, columns: tuple[str, ...], rows: list[tuple]) -> None:
+    """The same two tables as plain CSV, for tools that cannot read Parquet — SQL Server, Excel, R.
+
+    Booleans are written 'true' / 'false' and timestamps as ISO 8601 text, exactly as data/ writes them,
+    so a loader that handles one handles the other.
+    """
+    flag = columns.index("is_current")
+    with path.open("w", newline="", encoding="utf-8") as f:
+        out = csv.writer(f, lineterminator="\n")
+        out.writerow(columns)
+        out.writerows([r[:flag] + ("true" if r[flag] else "false",) + r[flag + 1:] for r in rows])
+
+
 def export(folder: pathlib.Path) -> dict:
-    """Write codes.parquet and lists.parquet into `folder`. Returns how many rows each holds."""
+    """Write codes and lists, as Parquet and as CSV, into `folder`. Returns how many rows each holds."""
     folder.mkdir(parents=True, exist_ok=True)
     src = db.connect(read_only=True)
     try:
@@ -83,14 +99,16 @@ def export(folder: pathlib.Path) -> dict:
     con.execute("SET TimeZone = 'UTC'")
     _write(con, "codes", CODES, codes, folder / "codes.parquet", meta)
     _write(con, "lists", LISTS, lists, folder / "lists.parquet", meta)
+    _csv(folder / "codes.csv", CODES, codes)
+    _csv(folder / "lists.csv", LISTS, lists)
     return {"codes": len(codes), "lists": len(lists)}
 
 
 def main() -> int:
     folder = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else ".")
     made = export(folder)
-    print(f"✓  {made['codes']} code versions → {folder / 'codes.parquet'}")
-    print(f"✓  {made['lists']} list versions → {folder / 'lists.parquet'}")
+    print(f"✓  {made['codes']} code versions → {folder / 'codes.parquet'} and codes.csv")
+    print(f"✓  {made['lists']} list versions → {folder / 'lists.parquet'} and lists.csv")
     return 0
 
 

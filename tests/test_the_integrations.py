@@ -102,9 +102,24 @@ def test_the_csv_loaders_build_the_same_tables_and_are_linked_up():
         assert loader in flat(ROOT / "integrations" / tool / "README.md"), f"the {tool} guide does not cover it"
 
 
+def test_the_sql_server_loader_names_every_column_and_builds_a_table_per_list():
+    """SQL Server reads the release's CSV — it cannot fetch a URL, and Parquet needs external storage."""
+    sql = flat(ROOT / "integrations" / "sqlserver" / "load_ukhrd.sql")
+
+    for column in export_parquet.CODES:
+        assert column in sql.split("CREATE TABLE ukhrd.lists_raw")[0], f"ukhrd.codes is missing {column}"
+    for column in export_parquet.LISTS:
+        assert column in sql, f"ukhrd.lists is missing {column}"
+    assert "INTO ukhrd.' + QUOTENAME(@list)" in sql, "no table per reference list"
+    assert "FORMAT = ''CSV''" in sql and "ROWTERMINATOR = ''0x0a''" in sql, "the files are CSV with \\n lines"
+    assert LATEST + "codes.csv" in sql and LATEST + "lists.csv" in sql
+    assert CREDIT in sql and "not endorsed by NHS England" in sql
+
+
 def test_each_loader_has_a_guide_that_names_it_and_carries_the_credit():
     index = flat(ROOT / "integrations" / "README.md")
-    for tool, loader in (("fabric", "load_ukhrd.ipynb"), ("snowflake", "load_ukhrd.sql")):
+    for tool, loader in (("fabric", "load_ukhrd.ipynb"), ("snowflake", "load_ukhrd.sql"),
+                         ("sqlserver", "load_ukhrd.sql")):
         guide = flat(ROOT / "integrations" / tool / "README.md")
         assert loader in guide, f"the {tool} guide does not name the file it walks you through"
         assert "## Steps" in guide and "If something goes wrong" in guide, f"{tool}: steps, then what breaks"

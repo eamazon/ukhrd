@@ -139,12 +139,25 @@ Each release carries ready-built copies. These links always point at the newest:
 | [`lists.parquet`](https://github.com/eamazon/ukhrd/releases/latest/download/lists.parquet) | every version of every list's details, with its NHS page |
 | [`ukhrd.mcpb`](https://github.com/eamazon/ukhrd/releases/latest/download/ukhrd.mcpb) | the MCP server as a one-click bundle |
 
+## Loading it into a warehouse
+
+Ready-to-run loaders live in **[`integrations/`](integrations/)**. Each builds **one table per reference
+list** — `ukhrd_admission_method`, `ukhrd_treatment_function_code`, and 119 more — so a join names a table
+rather than filtering on a list name.
+
+| platform | step-by-step | from the release's Parquet | from the repository's CSV |
+|---|---|---|---|
+| Microsoft Fabric | [guide](integrations/fabric/README.md) | [notebook](integrations/fabric/load_ukhrd.ipynb) | [notebook](integrations/fabric/load_ukhrd_from_csv.ipynb) |
+| Snowflake | [guide](integrations/snowflake/README.md) | [SQL script](integrations/snowflake/load_ukhrd.sql) | [SQL script](integrations/snowflake/load_ukhrd_from_csv.sql) |
+| DuckDB · Postgres · Power BI | [recipes](docs/QUERIES.md#without-cloning--duckdb-postgres-snowflake-fabric-power-bi) | — | — |
+
+The Fabric guide also covers landing the files with a pipeline instead, click by click, if bronze and
+silver are kept apart.
+
 ## Three ways in
 
 1. **SQL.** One real table per list. No ORM, no service to run. Open `ukhrd.db` with anything that reads
-   SQLite, or load the Parquet files into your own warehouse — ready-to-run loaders for **Microsoft Fabric
-   and Snowflake** are in [`integrations/`](integrations/), and DuckDB, Postgres and Power BI recipes are
-   in [`docs/QUERIES.md`](docs/QUERIES.md). Each loader builds one table per reference list.
+   SQLite, or load it into your own warehouse — see **[Loading it into a warehouse](#loading-it-into-a-warehouse)**.
 2. **Command line.** `refresh`, `load`, `status`, `lists`, `show`, `lookup`, `history`, `changes`.
 3. **MCP server**, read-only, for AI assistants. See [below](#for-ai-assistants-mcp).
 

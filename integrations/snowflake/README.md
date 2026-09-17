@@ -41,6 +41,26 @@ The script is [`load_ukhrd.sql`](load_ukhrd.sql). Open it in a Snowsight workshe
    access integration, a Python procedure that fetches the newest release itself, and a daily task.
    Set your warehouse name in the task, then `ALTER TASK ukhrd_refresh RESUME;` — tasks start suspended.
 
+## If you want the CSV files instead of Parquet
+
+[`load_ukhrd_from_csv.sql`](load_ukhrd_from_csv.sql) builds exactly the same tables from the **CSV store in
+the repository**. Download and unzip
+`https://github.com/eamazon/ukhrd/archive/refs/heads/main.zip`, then `PUT` `data/lists.csv` and
+`data/nhs_dd_cds/*.csv` into a stage with a directory table, and run its Part 2: it loops over the staged
+files, stacks them into `ukhrd_codes` and cuts one table per list.
+
+| | Parquet route (`load_ukhrd.sql`) | CSV route (`load_ukhrd_from_csv.sql`) |
+|---|---|---|
+| Files to stage | 2 | 122 |
+| Types | already typed in the file | cast on the way in, by column position |
+| Bronze | the release file | the publisher's own CSV, the exact file git tracks |
+| Waits for a release | yes — one is cut only when NHS England changes something | no |
+| Self-refreshing option | yes, Part 4 | not included; repeat the upload |
+
+⚠ The CSV load is **positional**: every code file has the same twelve columns, but the first is named after
+its own list (`admission_method_key`, …), so the script selects `$1 … $12` rather than matching names. A
+test in this repository checks that order against the exporter.
+
 ## Using it
 
 ```sql

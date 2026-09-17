@@ -8,6 +8,7 @@ from __future__ import annotations
 import importlib.util
 import json
 import pathlib
+import re
 
 import pytest
 
@@ -69,6 +70,36 @@ def test_the_per_list_loop_makes_exactly_one_table_per_code_file(tmp_path):
     files = {p.stem for p in files_module.codes_dir(SOURCE).glob("*.csv")}
     assert made == {"ukhrd_" + f for f in files}, "one table per code file, named after it"
     assert con.execute("SELECT count(*) FROM ukhrd_concept_0").fetchone()[0] == 20
+
+
+def test_the_csv_loaders_read_the_columns_the_files_actually_have():
+    """The CSV load is positional — every code file names its first column after its own list — so a
+    column added to data/ must be added here too, in the same place."""
+    sql = flat(ROOT / "integrations" / "snowflake" / "load_ukhrd_from_csv.sql")
+
+    def last_position(block: str) -> int:
+        return max(int(n) for n in re.findall(r"\$(\d+)::", block))
+
+    lists_copy = sql.split("COPY INTO ukhrd_lists")[1].split(";")[0]
+    codes_insert = sql.split("INSERT INTO ukhrd_codes")[1].split("FROM @ukhrd_csv_stage")[0]
+    assert last_position(lists_copy) == len(files_module.LIST), "lists.csv has a different number of columns"
+    assert last_position(codes_insert) == len(files_module.code_columns("x")), "a code file has changed shape"
+    assert "ARCHIVE" in sql.upper() or "archive/refs/heads/main.zip" in sql, "say where the CSVs come from"
+
+
+def test_the_csv_loaders_build_the_same_tables_and_are_linked_up():
+    for path, marker in ((ROOT / "integrations" / "fabric" / "load_ukhrd_from_csv.ipynb",
+                          "saveAsTable(PREFIX + name)"),
+                         (ROOT / "integrations" / "snowflake" / "load_ukhrd_from_csv.sql",
+                          "'CREATE OR REPLACE TABLE ukhrd_' || list_name")):
+        text = flat(path)
+        assert marker in text, f"{path.name} does not build one table per reference list"
+        assert CREDIT in text and "not endorsed by NHS England" in text, f"{path.name} dropped the credit"
+
+    index = flat(ROOT / "integrations" / "README.md")
+    for tool, loader in (("fabric", "load_ukhrd_from_csv.ipynb"), ("snowflake", "load_ukhrd_from_csv.sql")):
+        assert loader in index, f"the index does not link the {tool} CSV loader"
+        assert loader in flat(ROOT / "integrations" / tool / "README.md"), f"the {tool} guide does not cover it"
 
 
 def test_each_loader_has_a_guide_that_names_it_and_carries_the_credit():

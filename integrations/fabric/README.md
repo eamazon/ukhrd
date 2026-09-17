@@ -73,8 +73,45 @@ those apart, any of these work — the files are ordinary Parquet over HTTPS.
 | **This notebook** | one step from release to 121 tables, scheduled | nothing — but it is code, and it writes bronze and silver together |
 
 **A medallion split that works:** a pipeline copies the two files into `Files/bronze/ukhrd/<date>/` each
-morning, then runs this notebook with the download cell removed, pointing `spark.read.parquet` at the
-bronze folder. Bronze stays the untouched publisher file; silver is the 121 tables.
+morning, then runs this notebook with `DOWNLOAD = False` and `FOLDER` pointing at that bronze folder.
+Bronze stays the untouched publisher file; silver is the 121 tables. Click by click:
+
+### Pipeline for bronze, click by click
+
+1. **New item → Data pipeline.** Name it `ukhrd bronze`.
+2. **Copy data → Add to canvas.**
+3. **Source tab → Connection → More → HTTP.** Base URL `https://github.com`, authentication **Anonymous**.
+   Name it `github-ukhrd`.
+4. Still on Source: **Relative URL**
+   `/eamazon/ukhrd/releases/latest/download/codes.parquet`, **Method** `GET`, **File format** `Binary`
+   (binary keeps the file byte for byte).
+5. **Destination tab → Workspace → Lakehouse → your Lakehouse → Root folder `Files`.**
+   **File path** `bronze/ukhrd/@{formatDateTime(utcNow(),'yyyy-MM-dd')}`, **File name** `codes.parquet`,
+   **File format** `Binary`.
+6. **Copy the activity and paste it.** In the copy, change both file names to `lists.parquet`.
+7. **Run** the pipeline, then look in the Lakehouse under `Files/bronze/ukhrd/<today>/` — two files.
+8. **Add the notebook.** Drag **Notebook** onto the canvas, connect it after the two copies (**On success**),
+   and choose `load_ukhrd`. Under **Settings → Base parameters** add `DOWNLOAD` = `False` (type Boolean)
+   and `FOLDER` = `bronze/ukhrd/<today's expression>` (type String). In the notebook, open the first code
+   cell's **⋯ menu → Toggle parameter cell** once, so the pipeline's values replace those lines.
+9. **Schedule** the pipeline: **Home → Schedule → On**, daily, any time after **08:00 UTC**.
+
+If you would rather not use parameters, edit the first cell of the notebook by hand: set `DOWNLOAD = False`
+and `FOLDER = "bronze/ukhrd/2026-09-17/"`.
+
+## If you want the CSV files instead of Parquet
+
+[`load_ukhrd_from_csv.ipynb`](load_ukhrd_from_csv.ipynb) builds exactly the same tables from the **CSV
+store in the repository**: it downloads one zip of the repo, keeps the CSVs in `Files/bronze/ukhrd/<date>/`
+untouched, and reads them from there. Import and run it the same way as the other notebook.
+
+| | Parquet route (`load_ukhrd.ipynb`) | CSV route (`load_ukhrd_from_csv.ipynb`) |
+|---|---|---|
+| Source | two files on the latest release, about 40 KB | 122 CSV files from the repository, about 700 KB zipped |
+| Types | real timestamps and booleans, already typed | text; the notebook converts `is_current`, dates stay ISO text |
+| Bronze | the release file | the publisher's own CSV, the exact file git tracks |
+| Waits for a release | yes — one is cut only when NHS England changes something | no — the CSVs change the moment a change is merged |
+| Speed | seconds | a minute or two |
 
 ## If something goes wrong
 

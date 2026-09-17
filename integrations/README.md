@@ -3,10 +3,15 @@
 Ready-to-run loaders. Each one builds **one table per reference list** — `ukhrd_admission_method`,
 `ukhrd_treatment_function_code`, and 119 more — so a join names a table, never a filter on a list name.
 
-| step-by-step guide | what it sets up |
-|---|---|
-| **[Microsoft Fabric](fabric/README.md)** | [`fabric/load_ukhrd.ipynb`](fabric/load_ukhrd.ipynb) — import into a Lakehouse, run, schedule daily. The guide also covers a pipeline or dataflow instead, if bronze and silver are kept apart |
-| **[Snowflake](snowflake/README.md)** | [`snowflake/load_ukhrd.sql`](snowflake/load_ukhrd.sql) — stage, load, build the per-list tables, and optionally a daily task that fetches each new release itself |
+| step-by-step guide | from the release's Parquet | from the repository's CSV |
+|---|---|---|
+| **[Microsoft Fabric](fabric/README.md)** | [`fabric/load_ukhrd.ipynb`](fabric/load_ukhrd.ipynb) | [`fabric/load_ukhrd_from_csv.ipynb`](fabric/load_ukhrd_from_csv.ipynb) |
+| **[Snowflake](snowflake/README.md)** | [`snowflake/load_ukhrd.sql`](snowflake/load_ukhrd.sql) | [`snowflake/load_ukhrd_from_csv.sql`](snowflake/load_ukhrd_from_csv.sql) |
+
+Both routes end with the same tables. **Parquet** is two small typed files from the latest release —
+quickest, and what most people want. **CSV** is the publisher's own files, exactly as git tracks them, and
+does not wait for a release to be cut. The Fabric guide also covers landing the files with a pipeline
+(no code) and keeping bronze and silver apart.
 
 Both read the same two files, and these links always point at the newest release:
 

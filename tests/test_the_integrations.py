@@ -18,6 +18,11 @@ _spec.loader.exec_module(export_parquet)   # also puts src/ on the path
 from test_the_store_refuses_a_bad_answer import SOURCE, demo, three_lists  # noqa: E402,F401 — demo is the fixture
 from ukhrd import files as files_module, store  # noqa: E402
 
+def flat(path: pathlib.Path) -> str:
+    """One long line, so a check does not fail merely because prose wrapped."""
+    return " ".join(path.read_text().replace("\\n", " ").split())
+
+
 SQL = (ROOT / "integrations" / "snowflake" / "load_ukhrd.sql").read_text()
 NOTEBOOK = (ROOT / "integrations" / "fabric" / "load_ukhrd.ipynb").read_text()
 CREDIT = "Contains information from NHS England"
@@ -66,8 +71,21 @@ def test_the_per_list_loop_makes_exactly_one_table_per_code_file(tmp_path):
     assert con.execute("SELECT count(*) FROM ukhrd_concept_0").fetchone()[0] == 20
 
 
+def test_each_loader_has_a_guide_that_names_it_and_carries_the_credit():
+    index = flat(ROOT / "integrations" / "README.md")
+    for tool, loader in (("fabric", "load_ukhrd.ipynb"), ("snowflake", "load_ukhrd.sql")):
+        guide = flat(ROOT / "integrations" / tool / "README.md")
+        assert loader in guide, f"the {tool} guide does not name the file it walks you through"
+        assert "## Steps" in guide and "If something goes wrong" in guide, f"{tool}: steps, then what breaks"
+        assert CREDIT in guide and "not endorsed by NHS England" in guide, f"{tool} guide dropped the credit"
+        assert "not yet run against a live" in guide.lower(), f"{tool} guide must say it is untested"
+        assert f"({tool}/README.md)" in index, f"the index does not link to the {tool} guide"
+
+
 def test_both_loaders_use_the_stable_links_and_carry_the_credit():
-    for name, text in (("snowflake", SQL), ("fabric", NOTEBOOK)):
+    for name, path in (("snowflake", ROOT / "integrations" / "snowflake" / "load_ukhrd.sql"),
+                       ("fabric", ROOT / "integrations" / "fabric" / "load_ukhrd.ipynb")):
+        text = flat(path)
         assert LATEST in text, f"{name} should follow the latest release, not a fixed version"
         assert "codes.parquet" in text and "lists.parquet" in text, f"{name} loads both files"
         assert CREDIT in text, f"{name} dropped NHS England's credit"

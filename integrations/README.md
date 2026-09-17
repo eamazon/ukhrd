@@ -3,10 +3,10 @@
 Ready-to-run loaders. Each one builds **one table per reference list** — `ukhrd_admission_method`,
 `ukhrd_treatment_function_code`, and 119 more — so a join names a table, never a filter on a list name.
 
-| | |
+| step-by-step guide | what it sets up |
 |---|---|
-| [`fabric/load_ukhrd.ipynb`](fabric/load_ukhrd.ipynb) | Microsoft Fabric notebook. Import it into a Lakehouse and schedule it daily |
-| [`snowflake/load_ukhrd.sql`](snowflake/load_ukhrd.sql) | Snowflake worksheet script, with an optional daily task that refreshes itself |
+| **[Microsoft Fabric](fabric/README.md)** | [`fabric/load_ukhrd.ipynb`](fabric/load_ukhrd.ipynb) — import into a Lakehouse, run, schedule daily. The guide also covers a pipeline or dataflow instead, if bronze and silver are kept apart |
+| **[Snowflake](snowflake/README.md)** | [`snowflake/load_ukhrd.sql`](snowflake/load_ukhrd.sql) — stage, load, build the per-list tables, and optionally a daily task that fetches each new release itself |
 
 Both read the same two files, and these links always point at the newest release:
 
